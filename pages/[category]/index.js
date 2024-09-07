@@ -14,8 +14,6 @@ const Category = () => {
     const dispatch = useDispatch()
     const [loader, setloader] = useState(true)
     const [search, setSearch] = useState()
-    const [pagenumber, setPageNumber] = useState(1)
-
 
     useEffect(() => {
         if (router.query.category) {
@@ -91,10 +89,6 @@ const Category = () => {
                                 </Link>
                             </div>
                         )}
-                    </div>
-                    {/* here Pagination (react pagination) */}
-                    <div className="w-[100%] container m-auto flex justify-center items-center overflow-hidden mb-[25px] lg:mt-[30px] px-[10px]">
-                        <Pagination totalItems={data.total} itemsPerPage={2} pathName={`/${router.query.category}`} pagenumber={pagenumber} setpagenumber={setPageNumber} from='product' />
                     </div>
                 </div >
             </div>

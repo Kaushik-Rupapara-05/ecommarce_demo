@@ -2,13 +2,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import apiService from "../../configs/axios";
 import { categoryListUpdate, categorysPeoductData, SingleProductData } from "../slices/productSlice";
 
-export const singleProduct = createAsyncThunk("singleProduct", async ({ ID }, { dispatch }) => {
+export const singleProduct = createAsyncThunk("singleProduct", async ({ ID, loader }, { dispatch }) => {
     try {
         const singleProductdata = await apiService.get(`/products/${ID}`)
         const finalResult = await singleProductdata.data
         dispatch(SingleProductData(finalResult))
-        console.log(finalResult)
+        loader(false)
     } catch (error) {
+        loader(false)
 
     }
 })

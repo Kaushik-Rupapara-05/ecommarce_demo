@@ -1,12 +1,34 @@
 import Image from "next/image"
+import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 
 const Header = () => {
+    const router = useRouter()
+    const [isLogin, setIsLogin] = useState(false)
+    useEffect(() => {
+        let login = JSON.parse(localStorage.getItem("loginData"))
+        if (login) {
+            setIsLogin(true)
+        } else {
+            setIsLogin(false)
+        }
+    }, [router.query])
 
     return (
         <div className='sticky top-0 z-[10] drop-shadow-lg py-[5px] w-[100%] px-[10px] bg-[#f2f2f2] sm:py-[10px] sm:px-[10px]'>
-            <div className="flex justify-end bg-slate-400 p-[5px]"> <button className="p-[5px] border rounded">Login</button></div>
+            <div className="flex justify-end bg-slate-400 p-[5px]">
+                {isLogin ?
+                    <button className="p-[5px] border rounded" onClick={() => { localStorage.removeItem("loginData"); router.push("/login") }}>
+                        Log Out
+                    </button>
+                    :
+                    <button className="p-[5px] border rounded" onClick={() => { router.push("/login") }}>Login</button>
+                }
+
+            </div>
             <div className='flex justify-between items-center w-[100%] max-lg:flex-wrap lg:px-[55px]'>
                 <div className='max-lg:order-1	flex w-[50%] lg:w-[auto] gap-2'>
+
                     <div className="text-[50px]">
                         Logo
                     </div>

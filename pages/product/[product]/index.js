@@ -14,14 +14,14 @@ const Product = () => {
     const swiperRef = useRef();
     const containerRef = useRef();
 
-    // const [pinCodeArray, setPinCodeArray] = useState([])
-    const [pinCodePopup, setPinCodePopup] = useState(false)
+    const [loader, setloader] = useState(true)
+    const [count, setCount] = useState(1)
     const [viewZoomSlider, setViewZoomSlider] = useState(false)
     const [innerThumbSwiper, setInnerThumbSwiper] = useState(null);
 
     useEffect(() => {
         if (router.query.product) {
-            dispatch(singleProduct({ ID: router.query.product }))
+            dispatch(singleProduct({ ID: router.query.product, loader: setloader }))
         }
     }, [router.query])
 
@@ -29,7 +29,27 @@ const Product = () => {
     const productImages = data?.images || [];
 
     console.log(data)
+
+    function AddTOcart() {
+        if (JSON.parse(localStorage.getItem("cartData")).length > 0) {
+            const cartData = JSON.parse(localStorage.getItem("cartData"))
+            let newCartData = [...cartData, { product: data, qunty: count }]
+            localStorage.setItem("cartData", JSON.stringify(newCartData))
+
+        } else {
+            alert("please Login First")
+            router.push("/login")
+        }
+    }
+
     return (<>
+        {loader &&
+            <div className="w-[100%] h-[100vh] z-[100] bg-[white] absolute top-0 left-0 flex flex-col justify-center items-center ">
+                <div className="redirectLoader">
+
+                </div>
+            </div>
+        }
         <div className="w-[100%] px-[20px] mt-[10px]">
             {/* <p>{`Home > ${data.productSingle.name}`}</p> */}
             <div id='main-product-page-div' className='w-[100%]  md:py-[30px] '>
@@ -68,7 +88,7 @@ const Product = () => {
                                                 <>
                                                     <SwiperSlide key={i} onClick={() => { setViewZoomSlider(true) }} className='flex justify-center w-[auto]'>
                                                         <div className='cursor-pointer w-[100%] h-[100%] flex justify-center items-center swiper-zoom-container  rounded-[10px] relative'>
-                                                            <Image width={1000} height={1000} className='w-[100%] h-[auto] rounded-[10px]' alt={item.title} src={item.image} />
+                                                            <Image key={i} width={1000} height={1000} loading="lazy" className='w-[100%] h-[auto] rounded-[10px]' alt={""} src={item} />
                                                         </div>
                                                     </SwiperSlide>
                                                 </>
@@ -97,7 +117,7 @@ const Product = () => {
                                             {productImages.map((item, i) => {
                                                 return (
                                                     <SwiperSlide className='' key={i}>
-                                                        <Image className='max-w-[80px] rounded-[10px] border cursor-pointer border-[#CAC2C2]' alt={item.title} width={80} height={80} src={item.image} />
+                                                        <Image loading="lazy" className='max-w-[80px] rounded-[10px] border cursor-pointer border-[#CAC2C2]' alt={""} width={80} height={80} src={item} />
                                                     </SwiperSlide>
                                                 )
                                             })}
@@ -110,12 +130,12 @@ const Product = () => {
                         <div className='lg:col-span-7 col-span-12 px-[10px]'>
                             <div id='price-on-product-page' className='w-[100%] flex flex-wrap '>
                                 <div className="flex flex-col w-[100%] xl:w-[55%] lg:pr-[30px]">
-                                    <div className='flex justify-between items-start'>
-                                        <h1 className=' text-mainColor text-[19px] sm:text-[23px] ml-[2px] md:text-[25px] font-semibold leading-normal w-[100%] xl:w-[100%]'>{data?.productSingle?.name}</h1>
+                                    <div className=''>
+                                        <h1 className=' text-mainColor text-[19px] sm:text-[23px] ml-[2px] md:text-[25px] font-semibold leading-normal w-[100%] xl:w-[100%]'>{data?.title}</h1>
+                                        <p>{data?.warrantyInformation}</p>
                                     </div>
-                                    <div className='flex justify-between items-start'>
-                                    </div>
-                                    <div className='flex justify-between'>
+                                    <p className="text-[22px]">${data?.price}</p>
+                                    <div className='flex items-center gap-[5px]'>
                                         <div className='flex items-center text-center max-lg:mb-[10px] mt-[10px] md:mt-[5px]'>
                                             <StarRatings
                                                 rating={5}
@@ -126,38 +146,23 @@ const Product = () => {
                                                 starDimension="20px"
                                                 starSpacing="3px"
                                             />
-                                            {/* <p className='text-[15px] lg:text-[18px] leading-normal tracking-[0.6px] ml-[4px] mr-[5px] lg:mr-[12px]'>{`( ${data.productSingle.total_reviews} )`}</p> */}
                                         </div>
+                                        <p>{data?.rating} / 5</p>
                                     </div>
 
-                                    <div className='mt-[16px] hidden lg:block'>
+                                    <div className='mt-[16px]'>
                                         <div className='flex items-center'>
-                                            {/* {data.productSingle.short_description.map((item, i) =>
-                                                <p key={i} className="font-light"><span className="font-bold">{item.key}</span>{item.value}</p>
-                                            )} */}
+                                            {data.description &&
+                                                <p className="font-light">{data.description}</p>
+                                            }
                                         </div>
                                         <div className='flex items-center justify-between mt-[10px]'>
-                                            {/* {data.productSingle.prices.map((item, i) =>
-                                                <div key={i} className="flex flex-col justify-center items-center">
-                                                    <p>{item.duration_value} {item.duration_type}</p>
-                                                    <p className="font-bold">{currencyFormatter.format(item.price, { symbol: '$', thousand: ',', precision: 0, })}</p>
-                                                </div>
-                                            )} */}
+                                            <div className="flex items-center select-none gap-[5px] bottom border-[1px]">
+                                                <p className="p-[5px] cursor-pointer" onClick={() => { count > 1 ? setCount(count - 1) : "" }}>-</p>
+                                                {count}
+                                                <p className="p-[5px] cursor-pointer" onClick={() => { setCount(count + 1) }} >+</p></div>
                                         </div>
-
-                                        {/* <div className="bg-[#f5fbff] w-[100%] border p-[16px]">
-                                            <div className="flex gap-[5px] items-center">
-                                                <Image src={location} className="w-[12px] h-[16px]" />
-                                                <p> Enter rental details for rates & availability</p>
-                                            </div>
-                                            <div className="relative w-[100%]">
-                                                <Image src={location} className="w-[13.65px] h-[18px] absolute top-[32%] left-[10px]" />
-                                                <input type="number" min={0} maxLength={6} onChange={(e) => { console.log(e.target.value.trim().replace(/[^0-9]/g, '')) }} className="Input-num-hide w-[100%] py-[15px] pl-[37px] pr-[15px] outline-none bg-white" placeholder="Enter Shipping Zip Code" />
-                                            </div>
-                                            <div className="text-[14px] underline text-[blue] cursor-pointer text-end" onClick={(e) => { setPinCodePopup(true) }}>
-                                                Service Areas by Zip Code
-                                            </div>
-                                        </div> */}
+                                        <button className="p-[10px] border bg-blue-500 text-white mt-[10px] hover:bg-blue-400" onClick={() => { AddTOcart() }}>Add To cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -166,7 +171,7 @@ const Product = () => {
 
                 </div >
             </div >
-        </div>
+        </div >
     </>)
 }
 
