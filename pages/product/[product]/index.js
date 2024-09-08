@@ -28,18 +28,39 @@ const Product = () => {
     const data = useSelector(state => state?.listofProducts?.singleProductData)
     const productImages = data?.images || [];
 
-    console.log(data)
-
     function AddTOcart() {
-        if (JSON.parse(localStorage.getItem("cartData")).length > 0) {
-            const cartData = JSON.parse(localStorage.getItem("cartData"))
-            let newCartData = [...cartData, { product: data, qunty: count }]
-            localStorage.setItem("cartData", JSON.stringify(newCartData))
+        // const loginData = JSON.parse(localStorage.getItem("loginData"))
+        // if (loginData) {
 
+        const cartData = JSON.parse(localStorage.getItem("cartData"))
+        if (cartData) {
+            let newCartData = []
+            let foundInCart = false
+            cartData.map(item => {
+                if (item.product.id == data.id) {
+                    foundInCart = true
+                    let temp = {
+                        product: item.product,
+                        qunty: item.qunty + count
+                    }
+                    newCartData.push(temp)
+                } else {
+                    newCartData.push(item)
+                }
+            })
+            if (!foundInCart) {
+                newCartData.push({ product: data, qunty: count })
+            }
+
+            localStorage.setItem("cartData", JSON.stringify([...newCartData]))
         } else {
-            alert("please Login First")
-            router.push("/login")
+            localStorage.setItem("cartData", JSON.stringify([{ product: data, qunty: count }]))
         }
+        router.push('/cart')
+        // } else {
+        //     alert("please Login First")
+        //     router.push("/login")
+        // }
     }
 
     return (<>
@@ -136,7 +157,7 @@ const Product = () => {
                                     </div>
                                     <p className="text-[22px]">${data?.price}</p>
                                     <div className='flex items-center gap-[5px]'>
-                                        <div className='flex items-center text-center max-lg:mb-[10px] mt-[10px] md:mt-[5px]'>
+                                        <div className='flex items-center text-center max-lg:mb-[10px]'>
                                             <StarRatings
                                                 rating={5}
                                                 starEmptyColor="#D7AAFA"

@@ -69,7 +69,7 @@ const Category = () => {
                     <div className='grid grid-cols-12 gap-[10px] sm:gap-[30px] px-[0px] lg:mt-[30px] mt-[15px]'>
                         {data.products && data.products.map((item, i) =>
                             <div key={i} className="xl:col-span-3 md:col-span-4 col-span-6 ">
-                                <Link onClick={() => { gtmDetailsMakerForSelectItem(item, i,) }} id={i} target={'_blank'} href={`/product/${item.id}`}>
+                                <Link onClick={() => { gtmDetailsMakerForSelectItem(item, i,) }} id={i} href={`/product/${item.id}`}>
                                     <div className='cursor-pointer w-[100%] flex justify-center items-center group'>
                                         <div className='hover:shadow-[0_8px_20px_#dedede] w-[100%] h-[100%] mb-[10px] relative overflow-hidden rounded-[10px] group '>
                                             <div className={`${i % 2 == 0 ? "backgroundGray" : "backgroundYellow"} overflow-hidden relative sm:w-[100%] rounded-[10px]  min-w-[100%] transition-all duration-1000 bg-[white] lg:flex justify-center items-center`}>
