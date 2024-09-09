@@ -20,7 +20,6 @@ const Login = () => {
         setRunLoginValidation(false)
 
         const RegisterData = JSON.parse(localStorage.getItem("RegisterData"))
-        console.log(RegisterData)
         if (RegisterData) {
             let IsRegister = false
             let IsLoginSuccass = false
@@ -92,7 +91,6 @@ const Login = () => {
 
     function loginDataHandler(e) {
         const { name, value } = e.target
-        console.log(name, value)
         setLoginData((prev) => ({ ...prev, [name]: value }))
     }
 

@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux"
 import { Swiper, SwiperSlide } from "swiper/react"
 import Image from "next/image"
 import StarRatings from "react-star-ratings"
-import { stringify } from "postcss"
 
 const Product = () => {
     const dispatch = useDispatch()

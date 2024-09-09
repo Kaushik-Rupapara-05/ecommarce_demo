@@ -62,7 +62,7 @@ const Cart = () => {
                     <div className="grid grid-cols-12 gap-[10px]">
                         <div className="col-span-12 md:col-span-8">
                             {cartData.map((item, i) =>
-                                <div className="gap-[5px] bg-[#F5FBFF] rounded-[16px] flex justify-between p-[10px] mt-[5px] border">
+                                <div key={i} className="gap-[5px] bg-[#F5FBFF] rounded-[16px] flex justify-between p-[10px] mt-[5px] border">
                                     <div className="flex justify-between items-start">
                                         <Image width={100} height={100} className='w-[100px] h-[auto] rounded-[10px]' alt={item.product.id} src={item.product.images[0]} />
                                         <div className="">

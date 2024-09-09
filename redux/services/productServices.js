@@ -40,13 +40,3 @@ export const CategorysProducts = createAsyncThunk("CategorysProducts", async ({ 
 
     }
 })
-
-export const sortedData = createAsyncThunk("sortedData", async ({ query, category }, { dispatch }) => {
-    try {
-        const productData = await apiService.get(`/products/category/${category}`, { params: { ...query } })
-        const finaldata = await productData.data
-        dispatch(categorysPeoductData(finaldata))
-    } catch (error) {
-
-    }
-})
