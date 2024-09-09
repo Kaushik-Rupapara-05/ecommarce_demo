@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Swiper, SwiperSlide } from "swiper/react"
 import Image from "next/image"
 import StarRatings from "react-star-ratings"
+import { stringify } from "postcss"
 
 const Product = () => {
     const dispatch = useDispatch()
@@ -23,44 +24,46 @@ const Product = () => {
         if (router.query.product) {
             dispatch(singleProduct({ ID: router.query.product, loader: setloader }))
         }
+        localStorage.removeItem("FromWhere")
     }, [router.query])
 
     const data = useSelector(state => state?.listofProducts?.singleProductData)
     const productImages = data?.images || [];
 
     function AddTOcart() {
-        // const loginData = JSON.parse(localStorage.getItem("loginData"))
-        // if (loginData) {
+        const loginData = JSON.parse(localStorage.getItem("loginData"))
+        if (loginData) {
 
-        const cartData = JSON.parse(localStorage.getItem("cartData"))
-        if (cartData) {
-            let newCartData = []
-            let foundInCart = false
-            cartData.map(item => {
-                if (item.product.id == data.id) {
-                    foundInCart = true
-                    let temp = {
-                        product: item.product,
-                        qunty: item.qunty + count
+            const cartData = JSON.parse(localStorage.getItem("cartData"))
+            if (cartData) {
+                let newCartData = []
+                let foundInCart = false
+                cartData.map(item => {
+                    if (item.product.id == data.id) {
+                        foundInCart = true
+                        let temp = {
+                            product: item.product,
+                            qunty: item.qunty + count
+                        }
+                        newCartData.push(temp)
+                    } else {
+                        newCartData.push(item)
                     }
-                    newCartData.push(temp)
-                } else {
-                    newCartData.push(item)
+                })
+                if (!foundInCart) {
+                    newCartData.push({ product: data, qunty: count })
                 }
-            })
-            if (!foundInCart) {
-                newCartData.push({ product: data, qunty: count })
-            }
 
-            localStorage.setItem("cartData", JSON.stringify([...newCartData]))
+                localStorage.setItem("cartData", JSON.stringify([...newCartData]))
+            } else {
+                localStorage.setItem("cartData", JSON.stringify([{ product: data, qunty: count }]))
+            }
+            router.push('/cart')
         } else {
-            localStorage.setItem("cartData", JSON.stringify([{ product: data, qunty: count }]))
+            alert("please Login First")
+            router.push("/login")
+            localStorage.setItem("FromWhere", JSON.stringify(`/product/${data.id}`))
         }
-        router.push('/cart')
-        // } else {
-        //     alert("please Login First")
-        //     router.push("/login")
-        // }
     }
 
     return (<>
@@ -109,7 +112,7 @@ const Product = () => {
                                                 <>
                                                     <SwiperSlide key={i} onClick={() => { setViewZoomSlider(true) }} className='flex justify-center w-[auto]'>
                                                         <div className='cursor-pointer w-[100%] h-[100%] flex justify-center items-center swiper-zoom-container  rounded-[10px] relative'>
-                                                            <Image key={i} width={1000} height={1000} loading="lazy" className='w-[100%] h-[auto] rounded-[10px]' alt={""} src={item} />
+                                                            <Image key={i} width={1000} height={1000} loading="lazy" className='sm:w-[100%] w-[269px] h-[auto] rounded-[10px]' alt={""} src={item} />
                                                         </div>
                                                     </SwiperSlide>
                                                 </>

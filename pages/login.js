@@ -40,7 +40,7 @@ const Login = () => {
                 if (!IsLoginSuccass) {
                     alert("password Incorrect")
                 } else {
-                    const FromWhere = JSON.parse(localStorage.getItem("fromWhere"))
+                    const FromWhere = JSON.parse(localStorage.getItem("FromWhere"))
                     alert("login Successfull")
                     if (FromWhere) {
                         router.push(FromWhere)
@@ -104,7 +104,7 @@ const Login = () => {
 
     return (
         <div className="w-[100%]">
-            <form className=" w-[500px] m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
+            <form className=" max-w-[500px] m-[5px] sm:m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
                 <label form="emial">Email<span className="text-[red]">*</span></label>
                 <input value={loginData.email} name="email" type="email" className="border outline-none p-[5px]" onChange={(e) => { loginDataHandler(e) }} />
                 {error.email && <p className="text-[red]">{error.email}</p>}
@@ -116,7 +116,7 @@ const Login = () => {
                 {error.password && <p className="text-[red]">{error.password}</p>}
                 <button type="submit" className="border w-fit m-[auto] mt-[10px] p-[10px] bg-blue-500 hover:bg-blue-400 text-white">Submit</button>
             </form>
-            <div className="w-[500px] flex justify-between m-[auto] mt-[10px]">
+            <div className="max-w-[500px] flex justify-between  m-[5px] sm:m-[auto] mt-[10px]">
                 <p className="text-blue-500 underline cursor-pointer" onClick={() => { router.push("/forgetPassword") }}>Forget Password ?</p>
                 <p className="cursor-pointer" onClick={() => { router.push("/register") }}>Register New user</p>
             </div>

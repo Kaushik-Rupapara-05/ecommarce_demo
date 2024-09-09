@@ -89,7 +89,7 @@ const Register = () => {
 
     return (<>
         <p className="text-center mt-[20px]"> Register New user</p>
-        <form className=" w-[500px] m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
+        <form className="m-[5px] max-w-[500px] sm:m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
             <label form="name">Name<span className="text-[red]">*</span></label>
             <input value={registerData.name} name="name" type="text" className="border outline-none p-[5px]" onChange={(e) => { registerDataHandler(e) }} />
             {error.name && <p className="text-[red]">{error.name}</p>}

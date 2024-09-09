@@ -95,7 +95,7 @@ const ForgetPassword = () => {
 
     return (<>
         <p className="text-center mt-[20px]"> ForgetPassword</p>
-        <form className=" w-[500px] m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
+        <form className=" max-w-[500px] m-[5px] sm:m-[auto] border mt-[20px] p-[20px] flex flex-col" onSubmit={(e) => { onSubmitHandler(e) }}>
             <label form="emial">Email<span className="text-[red]">*</span></label>
             <input value={forgetPasswordData.email} name="email" type="email" className="border outline-none p-[5px]" onChange={(e) => { forgetPasswordDataHandler(e) }} />
             {error.email && <p className="text-[red]">{error.email}</p>}

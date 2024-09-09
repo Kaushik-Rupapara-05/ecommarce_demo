@@ -38,3 +38,42 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+
+E-commerce Platform:-
+This is a dynamic and fully responsive eCommerce platform built using Next.js. It includes features such as dynamic slug handling, login management with local storage, product carousels, currency formatting, and more.
+
+Features:-
+
+Dynamic Slug Handling: Pages are dynamically generated based on product slugs.
+
+Responsive Design: Built with TailwindCSS for a mobile-first, responsive user interface.
+
+Login Management: User login states are handled using local storage for persistence across sessions.
+
+Product Carousel: Implemented using Swiper for smooth, touch-enabled sliders.
+
+Currency Formatting: Products are displayed with formatted prices depending on user location.
+
+State Management: Managed using Redux Toolkit for efficient global state handling.
+
+API Integration: Axios is used for fetching data from APIs.
+
+Client-Side Routing: React Router DOM is used for seamless navigation.
+
+Technologies Used:-
+
+Next.js: For building the user interface.
+
+TailwindCSS: Utility-first CSS framework for rapid UI development.
+
+Redux Toolkit: State management for handling the cart, user authentication, and product listings.
+
+Swiper: For product image carousels.
+
+Axios: For making HTTP requests.
+
+React Router DOM: Client-side routing for navigating between pages.
+
+Local Storage: Used to persist login states and user sessions.
