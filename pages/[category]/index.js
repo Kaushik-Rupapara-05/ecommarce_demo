@@ -1,7 +1,4 @@
-import Filter from "@/components/filter"
-import MobileFilter from "@/components/mobilefilter"
-import Pagination from "@/components/paginatedItems"
-import { CategorysProducts, sortedData } from "@/redux/services/productServices"
+import { CategorysProducts } from "@/redux/services/productServices"
 import { fireSelectItemGtm } from "@/utils/ga4"
 import Image from "next/image"
 import Link from "next/link"
@@ -22,7 +19,6 @@ const Category = () => {
     }, [router])
 
     const data = useSelector(state => state?.listofProducts?.categorysPeoductDataList)
-    console.log(data)
     function gtmDetailsMakerForSelectItem(details, i, from) {
         const dataForSend = {
             value: "",
